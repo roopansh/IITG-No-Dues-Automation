@@ -46,6 +46,11 @@
 
 	$student=DB::table('student')->where('Asst Registrar SA','1')->where('Library','1')->where('CC','1')->where('Mech Workshop','1')->where('Department',$Department)->where($main, '0')->orderBy('Department')->orderBy('Student Name')->get();
 	
+	//$studentroll = json_decode($student,true);
+	//echo $studentroll[0]['Roll No'];
+	//dd($student); 
+
+
 	$student_Count = $student->count();
 	
 	$student = json_decode($student, true);
@@ -57,7 +62,18 @@
 		for ($i=0; $i < $student_Count; $i++)
 		{ 
 			$roll = (string)$student[$i]['Roll No'];
+			$checkallprof = 0;
+			for($j = 1; $j<29; $j++)
+			{
+				$sum = DB::table('student_dept_prof')->where('Roll No' ,$roll)->value($j);
+				$checkallprof+=$sum;
+			}
+			//echo $checkallprof;
 
+			if($checkallprof != 28)
+			{
+				continue;
+			}
 			$temp  = 'com_'.$i.'a'.$roll;
 			if( array_key_exists($temp, $_POST) && $_POST[$temp]) {
 				DB::table('student')->where('Asst Registrar SA','1')->where('Library','1')->where('CC','1')->where('Mech Workshop','1')->where('Department',$Department)->where($main, '0')->orderBy('Department')->orderBy('Student Name')->where('Roll No', $roll)->update([$main_Comments => $_POST[$temp]]);
@@ -67,10 +83,7 @@
 			if (array_key_exists($temp, $_POST) && $_POST["$temp"] == 'on')
 			{
 				DB::table('student')->where('Asst Registrar SA','1')->where('Library','1')->where('CC','1')->where('Mech Workshop','1')->where('Department',$Department)->where($main, '0')->orderBy('Department')->orderBy('Student Name')->where('Roll No', $roll)->update([$main => true]);
-			}			
-			
-
-			
+			}
 		}
 	}
 
@@ -80,7 +93,7 @@
 	echo "	<form method='post' action='/$main_low'>
 				<input type='submit' class='btn btn-primary' name='submit'>
 			<table class='table table-bordered table-condensed table-responsive table-hover'>
-			<tr>
+			<tr class='active'>
 				<th>Name</th>
 				<th>Roll No.</th>
 				<th>No Due
@@ -92,11 +105,12 @@
 				<th>Comment</th>
 			</tr>";
 
+	
 	$student=DB::table('student')->where('Asst Registrar SA','1')->where('Library','1')->where('CC','1')->where('Mech Workshop','1')->where('Department',$Department)->where($main, '0')->orderBy('Department')->orderBy('Student Name')->get();
 	
 	$student_Count = $student->count();
-	
 	$student = json_decode($student, true);
+	
 			
 			?>
 
@@ -106,19 +120,34 @@
 	//$student = json_decode($student, true);
 
 	for ($i=0; $i < $student_Count; $i++) { 
-		echo "<tr>";
+			$roll = (string)$student[$i]['Roll No'];
+			$checkallprof = 0;
+			for($j = 1; $j<29; $j++)
+			{
+				$sum = DB::table('student_dept_prof')->where('Roll No' ,$roll)->value($j);
+				$checkallprof+=$sum;
+			}
+			//echo $checkallprof;
+			//echo "<br>";
+			if($checkallprof != 28)
+			{
+				continue;
+			}
+		echo "<tr class='info'>";
         
         $temp  = (string)$student[$i]['Student Name'];
 		echo "<td>$temp</td>";
 		
 		$roll = (string)$student[$i]['Roll No'];
-		echo "<td>$temp</td>";
+		echo "<td>$roll</td>";
 		
 		$temp  = 'cb_'.$i.'a'.$roll;
 		echo "<td><input class='cb' type='checkbox' name='$temp'></td>";
 		
 		$temp  = 'com_'.$i.'a'.$roll;
-		echo "<td><input type='text' name='$temp'></td>";
+		$prevcom = DB::table('student')->where('Asst Registrar SA','1')->where('Library','1')->where('CC','1')->where('Mech Workshop','1')->value($main_Comments);
+		
+		echo "<td><input type='text' name='$temp' value='$prevcom'></td>";
 		
 		echo "</tr>";
 	}

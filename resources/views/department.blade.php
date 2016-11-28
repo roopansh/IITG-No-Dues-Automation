@@ -4,6 +4,12 @@
     Student's Portal
 @stop
 
+@section('css')
+ body{
+        background-image: url("/images/3.jpg");
+    }
+@stop
+
 @section('mainbody')
 
     <?php

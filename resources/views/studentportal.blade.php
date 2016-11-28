@@ -4,6 +4,12 @@
     Student's Portal
 @stop
 
+@section('css')
+ body{
+        background-image: url("/images/2.jpg");
+    }
+@stop
+
 @section('mainbody')
 
     <?php
@@ -24,7 +30,7 @@
 
     <table class="table table-bordered table-condensed table-responsive table-hover" style="">
         <thead>
-            <tr class='active'>
+            <tr class='active' style="color: black;">
                 <th>Coloumn Name</th>
                 <th>Comments</th>
             </tr>
@@ -50,7 +56,7 @@
                     }
                     if($temp == "0")
                     {
-                        echo"<tr class='danger' >
+                        echo"<tr class='danger' style='border: 1px red solid;' >
                             <td>$column[$i] </td>
                             <td>Dues Not Cleared Yet</td>
                         </tr>";

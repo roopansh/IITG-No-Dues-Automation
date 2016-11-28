@@ -12,7 +12,11 @@
         body {
             font-family: "Lato", sans-serif;
             transition: background-color .5s;
-            margin-top:100px
+            margin-top:50px;
+            background-image: url("/images/1.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            text-transform: uppercase;
         }
 
         .sidenav {
@@ -69,14 +73,47 @@
             .sidenav {padding-top: 15px;}
             .sidenav a {font-size: 18px;}
         }
+        
+        .panel-footer{
+            position: fixed;
+            bottom: 0%;
+            width: 100%;
+            font-style: bold;
+        }
 
+        .table{
+            margin-left: 25%;
+            margin-right: 25%;
+            margin-top: 1%;
+            margin-bottom: 10%;
+            width: 50%;
+            box-shadow: 0px 0px 20px 20px rgba(150,150,150,1);
+        }
+
+        table tr th td{
+            background-color: red;
+            text-decoration: black;
+            color: black;
+            border: 1px red solid;
+        }
+
+        h1{
+            color: #000000;
+            font-family: 'Raleway',sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 72px;
+            margin: 0 0 24px;
+            text-align: center;
+            text-transform: uppercase;
+        }
         @yield('css');
     </style>
 
     <body id="main">
         <!-- SideBar -->
         <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" id="closebtn" onclick="closeNav()" style:"margin-right:100px;">&times;</a>
+            <!--<a href="javascript:void(0)" id="closebtn" onclick="closeNav()" style:"margin-right:100px;">&times;</a>-->
             <div class="sidenav-list">
             @yield('sidebar')
             </div>
@@ -86,12 +123,12 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
-                    <li class="active"><p><span style="font-size:30px;cursor:pointer;color:white;" onclick="openNav()">&#9776;</span></p></li>
+                    <li class="active"><p><span style="font-size:30px;cursor:pointer;color:white;" onclick="SideBarControl()">&#9776;</span></p></li>
                 </ul>
                 <div class="navbar-header">
-                    <p><a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="#">
                         IITG AUTOMATION: NO DUES FORM
-                    </a></p>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -101,16 +138,29 @@
         <div id="mainbody" >
             @yield('mainbody')
         </div>
-
+        <!-- The footer of created by tag  -->
+        
         <footer style="float:bottom;">
             <div class="panel-footer">
-                <h3 style="color:blue; ">Created By: 3 Idiots</h3>
+                <h4 style="color:blue;">Created By: Team SCARDY</h4>
             </div>
         </footer>
-
+        
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
         <script>
+            var x = 0;
+            function SideBarControl(){
+                if (x == 1) {
+                    closeNav();
+                    x = 0;
+                }
+                else {
+                    openNav();
+                    x = 1;
+                }
+            }
+
             function openNav() {
                 document.getElementById("mySidenav").style.width = "250px";
                 document.getElementById("main").style.marginLeft = "250px";

@@ -71,7 +71,7 @@
 	echo "	<form method='post' action='/$main_low'>
 				<input type='submit' class='btn btn-primary' name='submit'>
 			<table class='table table-bordered table-condensed table-responsive table-hover'>
-			<tr>
+			<tr class='active'>
 				<th>Name</th>
 				<th>Roll No.</th>
 				<th>No Due
@@ -97,20 +97,21 @@
 	//$student = json_decode($student, true);
 
 	for ($i=0; $i < $student_Count; $i++) { 
-		echo "<tr>";
+		echo "<tr class='info'>";
         
         $temp  = (string)$student[$i]['Student Name'];
 		echo "<td>$temp</td>";
 		
 		$roll = (string)$student[$i]['Roll No'];
-		echo "<td>$temp</td>";
+		echo "<td>$roll</td>";
 		
 		$temp  = 'cb_'.$i.'a'.$roll;
 		echo "<td><input class='cb' type='checkbox' name='$temp'></td>";
 		
 		$temp  = 'com_'.$i.'a'.$roll;
-		echo "<td><input type='text' name='$temp'></td>";
+		$prevcom = DB::table('student')->value($main_Comments);
 		
+		echo "<td><input type='text' name='$temp' value='$prevcom'></td>";
 		echo "</tr>";
 	}
 			

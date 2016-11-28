@@ -34,7 +34,7 @@
 
 
 <table class="table table-bordered table-condensed table-responsive table-hover" style="">
-	<tr>
+	<tr class="active">
         <th>Column</th>
         <th>Details</th>
     </tr>
@@ -42,11 +42,11 @@
     <?php
         if($count_dept_prof!=0)
         {
-        	echo "<tr>
+        	echo "<tr class='info'>
         		<td>Name</td>
         		<td>$dept_prof_array[0]</td>
         	</tr>   
-        	<tr>
+        	<tr class='danger'>
         		<td>Department</td>
         		<td>$dept_prof_array[2]</td>
         	</tr> ";  
@@ -59,7 +59,7 @@
         	$temp = (string)$temp; 
             $temp  = (string)$designation_prof_array[$i][$temp];        	
 
-        	echo "<tr>
+        	echo "<tr class='success'>
         		<td>Designation </td>
         		<td>$temp</td>
         	</tr>";
@@ -68,7 +68,7 @@
         	$temp = (string)$temp; 
             $temp  = (string)$designation_prof_array[$i][$temp];
 
-        	echo "<tr>
+        	echo "<tr class='warning'>
         		<td>Field </td>
         		<td>$temp</td>
         	</tr>";
